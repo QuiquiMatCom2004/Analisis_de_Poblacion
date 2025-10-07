@@ -12,10 +12,7 @@ FLUJO_TRABAJO_TEMA_10: Tiene la estrategia de solucion a seguir para abordar est
 ### Carpetas Principales
 
 Documentation: Contiene la Bibliografia usada y la orientacion del proyecto
-|
-|___Readme: Explicacion de como esta compuesta la carpeta 
+- Readme: Explicacion de como esta compuesta la carpeta 
 Scripts: Contiene los archivos de python 
-|
-|___Isoclinas: Tiene el metodo que genera el campo de isoclinas de la ecuacion diferencial
-|
-|___requirements.txt: Librerias de python necesarias
+- Isoclinas: Tiene el metodo que genera el campo de isoclinas de la ecuacion diferencial
+- requirements.txt: Librerias de python necesarias
