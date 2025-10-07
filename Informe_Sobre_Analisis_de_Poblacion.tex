@@ -1,14 +1,11 @@
 %===================================================================================
 % JORNADA CIENTÍFICA ESTUDIANTIL - MATCOM, UH
 %===================================================================================
-% Esta plantilla ha sido diseñada para ser usada en los artículos de la
-% Jornada Científica Estudiantil de MatCom.
-%
-% Por favor, siga las instrucciones de esta plantilla y rellene en las secciones
-% correspondientes.
+% Análisis de Poblaciones Acotadas mediante la Ecuación Logística
+% Equipo 10: Enrique A. González Moreira, Heily Rodríguez Rodríguez, Alex L. Cuervo Grillo
 %
 % NOTA: Necesitará el archivo 'jcematcom.sty' en la misma carpeta donde esté este
-%       archivo para poder utilizar esta plantila.
+%       archivo para poder utilizar esta plantilla.
 %===================================================================================
 
 
@@ -24,12 +21,16 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{jcematcom}
+% Load input encoding and language before the custom style to avoid option clashes
 \usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{jcematcom}
+\usepackage{graphicx}
 \usepackage{listings}
 \usepackage[pdftex]{hyperref}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{float}
 %-----------------------------------------------------------------------------------
 % Configuración
 %-----------------------------------------------------------------------------------
@@ -39,40 +40,51 @@
 	    linkcolor=black,%
 	    urlcolor=blue}
 
+% Configuración de Listings
+\lstset{
+    keywordstyle=\color{blue},
+    basicstyle=\small\ttfamily,
+    commentstyle=\color{gray},
+    stringstyle=\color{red},
+    showstringspaces=false,
+    breaklines=true
+}
+
 %===================================================================================
 
 
 
 %===================================================================================
-% Presentacion
+% Presentación
 %-----------------------------------------------------------------------------------
 % Título
 %-----------------------------------------------------------------------------------
-\title{Documento de Ejemplo para la Jornada Científica Estudiantil}
+\title{Análisis de Poblaciones Acotadas mediante la Ecuación Logística}
 
 %-----------------------------------------------------------------------------------
 % Autores
 %-----------------------------------------------------------------------------------
 \author{\\
-\name Autor Uno \email \href{mailto:a.uno@lab.matcom.uh.cu}{a.uno@lab.matcom.uh.cu}
-	\\ \addr Grupo B612 \AND
-\name Autor Dos \email \href{mailto:a.dos@lab.matcom.uh.cu}{a.dos@lab.matcom.uh.cu}
-  \\ \addr Grupo B612}
+\name Enrique A. González Moreira \email \href{mailto:enrique.agonzalez1@estudiantes.matcom.uh.cu}{enrique.agonzalez1@estudiantes.matcom.uh.cu}
+	\\ \addr Grupo C-212 \AND
+\name Heily Rodríguez Rodríguez \email \href{mailto:heily.rodriguez@estudiantes.matcom.uh.cu}{heily.rodriguez@estudiantes.matcom.uh.cu}
+  \\ \addr Grupo C-212 \AND
+\name Alex L. Cuervo Grillo \email \href{mailto:alex.lcuervo@estudiantes.matcom.uh.cu}{alex.lcuervo@estudiantes.matcom.uh.cu}
+  \\ \addr Grupo C-212}
 
 %-----------------------------------------------------------------------------------
-% Tutores
+% Tutores (si aplica)
 %-----------------------------------------------------------------------------------
-\tutors{\\
-Dr. Tutor Uno, \emph{Centro} \\
-Lic. Tutor Dos, \emph{Centro}}
+ \tutors{\\
+ Dr. Nombre Apellido, \emph{MatCom, UH}}
 
 %-----------------------------------------------------------------------------------
 % Headings
 %-----------------------------------------------------------------------------------
-\jcematcomheading{\the\year}{1-\pageref{end}}{A. Uno, A. Dos}
+\jcematcomheading{\the\year}{1-\pageref{end}}{E. González, H. Rodríguez, A. Cuervo}
 
 %-----------------------------------------------------------------------------------
-\ShortHeadings{Ejemplo JCE}{Autores}
+\ShortHeadings{Análisis de Poblaciones Acotadas}{González, Rodríguez, Cuervo}
 %===================================================================================
 
 
@@ -93,15 +105,15 @@ Lic. Tutor Dos, \emph{Centro}}
 %===================================================================================
 % Resumen y Abstract
 %-----------------------------------------------------------------------------------
-\selectlanguage{spanish} % Para producir el documento en Español
+\selectlanguage{spanish}
 
 %-----------------------------------------------------------------------------------
 % Resumen en Español
 %-----------------------------------------------------------------------------------
 \begin{abstract}
 
-	El resumen en español debe constar de $100$ a $200$ palabras y presentar de forma
-	clara y concisa el contenido fundamental del artículo.
+	% TODO: Completar resumen (100-200 palabras)
+	Este trabajo presenta un análisis completo de poblaciones acotadas mediante la ecuación logística, abordando tres aspectos fundamentales: el modelo de crecimiento tumoral con tasa de natalidad exponencial decreciente, el análisis de bifurcación en sistemas poblacionales reducidos, y el estudio del plano de fase para sistemas acoplados de subpoblaciones. Se desarrolla la solución analítica del modelo, se implementan métodos numéricos (Euler y Runge-Kutta de orden 4) para la aproximación de soluciones, y se realiza un análisis detallado de errores, convergencia y complejidad computacional. Los resultados incluyen visualizaciones de campos de isoclinas, diagramas de bifurcación y retratos fase que permiten comprender el comportamiento cualitativo de las poblaciones bajo diferentes condiciones.
 
 \end{abstract}
 
@@ -112,8 +124,8 @@ Lic. Tutor Dos, \emph{Centro}}
 
 \begin{enabstract}
 
-  The English abstract must have have $100$ to $200$ words, and present 
-  the essentials of the article content in a clear and concise form.
+  % TODO: Completar abstract en inglés (100-200 palabras)
+  This work presents a comprehensive analysis of bounded populations using the logistic equation, addressing three fundamental aspects: the tumor growth model with exponentially decreasing birth rate, bifurcation analysis in reduced population systems, and phase plane study for coupled subpopulation systems. The analytical solution of the model is developed, numerical methods (Euler and 4th-order Runge-Kutta) are implemented for solution approximation, and a detailed analysis of errors, convergence, and computational complexity is performed. Results include visualizations of isocline fields, bifurcation diagrams, and phase portraits that enable understanding the qualitative behavior of populations under different conditions.
 
 \end{enabstract}
 
@@ -121,16 +133,19 @@ Lic. Tutor Dos, \emph{Centro}}
 % Palabras clave
 %-----------------------------------------------------------------------------------
 \begin{keywords}
-	Separadas,
-	Por,
-	Comas.
+	Ecuación logística,
+	Poblaciones acotadas,
+	Métodos numéricos,
+	Bifurcación,
+	Plano de fase,
+	Análisis de estabilidad.
 \end{keywords}
 
 %-----------------------------------------------------------------------------------
 % Temas
 %-----------------------------------------------------------------------------------
 \begin{topics}
-	Tema, Subtema.
+	Ecuaciones Diferenciales Ordinarias, Análisis Numérico, Modelación Matemática.
 \end{topics}
 
 
@@ -145,81 +160,285 @@ Lic. Tutor Dos, \emph{Centro}}
 %===================================================================================
 
 %===================================================================================
-% Resumen Extendido
-%-----------------------------------------------------------------------------------
-\section{Resumen Extendido}\label{sec:intro}
-%-----------------------------------------------------------------------------------
-  Este documento proporciona una plantilla para confeccionar el artículo de un 
-  trabajo a presentar en la Jornada Científica Estudiantil en el Evento Académico. El artículo no excederá 
-  de 2 páginas y SOLO contará con esta sección. Además no debe sobrepasar las 500 palabras. En esta sección debe incluir una presentación del dominio de su 
-  problema, los objetivos y motivaciones fundamentales de su investigación así como 
-  un resumen del estado del arte al respecto. Puede aprovechar para tratar las propuestas y métodos de solución empleados, así como los resultados obtenidos, pero todo a modo de resumen.
-  
-%-----------------------------------------------------------------------------------
-Para producir listas enumeradas, utilice el siguiente estilo:
-\begin{enumerate}
-	\item Primer Elemento
-	\item Segundo Elemento
-	%
-	\begin {enumerate}
-	\item {Segundo Elemento - Subítem Uno}
-	\item {Segundo Elemento - Subítem Dos}
-	\end {enumerate}
-	%
-\end{enumerate}
+% SECCIONES DEL INFORME
+%===================================================================================
 
 %-----------------------------------------------------------------------------------
-Para producir descripciones, use el siguiente estilo:
-
-%-----------------------------------------------------------------------------------
-\begin{description}
-	\item [Primer Elemento] con su respectiva descripción.
-	\item [Segundo Elemento] también con su respectiva descripción.
-\end{description}
-
-%-----------------------------------------------------------------------------------
-Para producir cuerpos flotantes (figuras o tablas), asegúrese de numerar
-y etiquetar correctamente cada figura. Las referencias a las figuras deben
-estar correctamente etiquetadas. Por ejemplo, véase la Fig. \ref{fig:ex}\ldots
-
-\begin{figure}[h!]%
-	\begin{center}
-		\begin{tabular}{|c|c|c|} \hline
-			& Método 1 	& Método 2 	\\ \hline
-			A 			&  			&  			\\ \hline
-			B			& 			& 			\\ \hline
-			C 			& 			&  			\\ \hline
-		\end{tabular}
-		\caption{Figura de ejemplo. Recuerde especificar el origen de los datos que se muestran. \label{fig:ex}}
-	\end{center}
-\end{figure}
+\section{Introducción}\label{sec:intro}
 %-----------------------------------------------------------------------------------
 
-Para producir código fuente, envuélvalo en una figura flotante y
-etiquételo correctamente. Por ejemplo, en la Fig. \ref{fig:code}
-se muestra un código bastante conocido\ldots
+% TODO: Completar introducción (0.5 páginas)
+% - Contexto: Crecimiento poblacional y limitaciones
+% - Aplicación: Modelos de tumores
+% - Objetivos del trabajo
+% - Estructura del documento
 
-% Configuración de Listings
-\lstset{keywordstyle=\color{blue}, basicstyle=\small}
 
-\begin{figure}[h!]%
-	\begin{lstlisting}[language=c]%
-		
-     int main(int argc, char** argv)
-     {
-         // Imprimiendo "Hola Mundo".
-         printf("Hello, World");
-     }
-		
-	\end{lstlisting}
-	\caption{Código fuente de ejemplo.\label{fig:code}}
-\end{figure}
+%-----------------------------------------------------------------------------------
+\section{Modelación Matemática}\label{sec:modelacion}
+%-----------------------------------------------------------------------------------
+
+% TODO: Completar modelación matemática (1.5 páginas)
+
+%-----------------------------------------------------------------------------------
+\subsection{Parte A: Modelo del Tumor}\label{subsec:parte-a}
+%-----------------------------------------------------------------------------------
+
+% TODO: Deducción de la EDO
+% EDO: dP/dt = β₀e^(-αt)P, P(0) = P₀
+% Parámetros: β₀, α, P₀
+% Solución analítica: P(t) = P₀ exp(β₀/α (1 - e^(-αt)))
+% Límite: lim(t→∞) P(t) = P₀ exp(β₀/α)
+
+Para un tumor con una tasa de natalidad que decrece exponencialmente, la ecuación diferencial que modela el crecimiento poblacional es:
+\[\frac{dP}{dt} = \beta_0 e^{-\alpha t} P,\]
+donde \(P(t)\) es la población en el tiempo \(t\), \(\beta_0 > 0\) es la tasa inicial de natalidad, y \(\alpha  > 0\) es la tasa de decrecimiento de la natalidad. La condición inicial es \(P(0) = P_0\).
+
+Resolviendo esta ecuación tal que: 
+
+\[\frac{dP}{dt} = \beta_0 e^{-\alpha t} P\]
+y separando variables, tenemos:
+\[\frac{dP}{P} = \beta_0 e^{-\alpha t} dt\]
+Integrando ambos lados:
+\[\int \frac{dP}{P} = \int \beta_0 e^{-\alpha t} dt\]
+lo que nos da:
+\[\ln|P| = -\frac{\beta_0}{\alpha} e^{-\alpha t} + C\]
+donde \(C\) es la constante de integración.
+Exponenciando ambos lados,
+\[P = e^C e^{-\frac{\beta_0}{\alpha} e^{-\alpha t}}\]
+Definiendo \(e^C = k\) y aplicando la condición inicial \(P(0) = P_0\),
+\[P_0 = k e^{-\frac{\beta_0}{\alpha}}\]
+de donde \(k = P_0 e^{\frac{\beta_0}{\alpha}}\).
+Sustituyendo \(k\) de nuevo en la expresión para \(P\),
+\[P(t) = P_0 e^{\frac{\beta_0}{\alpha}} e^{-\frac{\beta_0}{\alpha} e^{-\alpha t}} = P_0 e^{\left(\frac{\beta_0}{\alpha}(1 - e^{-\alpha t})\right)}\]
+obtenemos la solución analítica.
+La cual describe el crecimiento poblacional del tumor bajo la influencia de una tasa de natalidad que decrece exponencialmente con el tiempo.
+
+El límite cuando \(t\) tiende a infinito es:
+\[\lim_{t \to \infty} P(t) = \lim_{t \to \infty} P_0 e^{\left(\frac{\beta_0}{\alpha}(1 - e^{-\alpha t})\right)} = P_0 e^{\left(\frac{\beta_0}{\alpha}\right)}\]
+lo que indica que la población del tumor se estabiliza en un valor finito determinado por los parámetros \(\beta_0\) y \(\alpha\).
+
+%-----------------------------------------------------------------------------------
+\subsection{Parte B: Modelo de Bifurcación}\label{subsec:parte-b}
+%-----------------------------------------------------------------------------------
+
+% TODO: Reducción del sistema
+% EDO reducida: dz/dt = μz - z³
+% Parámetro de control: μ
+% Puntos de equilibrio: z* = 0, z* = ±√μ (si μ > 0)
+
+
+%-----------------------------------------------------------------------------------
+\subsection{Parte C: Sistema de Subpoblaciones}\label{subsec:parte-c}
+%-----------------------------------------------------------------------------------
+
+% TODO: Acoplamiento lineal
+% Sistema:
+%   dx/dt = x - y
+%   dy/dt = 2x - 3y
+% Matriz jacobiana: J = [[1, -1], [2, -3]]
+% Punto crítico: (0, 0)
+
+
+%-----------------------------------------------------------------------------------
+\section{Análisis Teórico}\label{sec:teoria}
+%-----------------------------------------------------------------------------------
+
+% TODO: Completar análisis teórico (1 página)
+
+%-----------------------------------------------------------------------------------
+\subsection{Existencia y Unicidad}\label{subsec:existencia}
+%-----------------------------------------------------------------------------------
+
+% TODO: Teorema de Picard-Lindelöf
+% Verificar continuidad de f(t,P) y ∂f/∂P
+
+
+%-----------------------------------------------------------------------------------
+\subsection{Análisis de Equilibrios y Estabilidad}\label{subsec:equilibrios}
+%-----------------------------------------------------------------------------------
+
+% TODO: Para Parte B y Parte C
+% Eigenvalores y clasificación de puntos críticos
+
+
+%-----------------------------------------------------------------------------------
+\section{Visualización}\label{sec:visualizacion}
+%-----------------------------------------------------------------------------------
+
+% TODO: Completar visualización (1.5 páginas)
+
+%-----------------------------------------------------------------------------------
+\subsection{Campo de Isoclinas}\label{subsec:isoclinas}
+%-----------------------------------------------------------------------------------
+
+% TODO: Gráfico del campo de isoclinas con soluciones numéricas
+% Ecuación: P = Ce^(αt)/β₀
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.45\textwidth]{figuras/isoclinas.pdf}
+%     \caption{Campo de isoclinas para el modelo del tumor.}
+%     \label{fig:isoclinas}
+% \end{figure}
+
+
+%-----------------------------------------------------------------------------------
+\subsection{Diagrama de Bifurcación}\label{subsec:bifurcacion}
+%-----------------------------------------------------------------------------------
+
+% TODO: Diagrama de bifurcación (μ vs z*)
+% Bifurcación de horquilla en μ = 0
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.45\textwidth]{figuras/bifurcacion.pdf}
+%     \caption{Diagrama de bifurcación del sistema reducido.}
+%     \label{fig:bifurcacion}
+% \end{figure}
+
+
+%-----------------------------------------------------------------------------------
+\subsection{Plano de Fase}\label{subsec:plano-fase}
+%-----------------------------------------------------------------------------------
+
+% TODO: Retrato fase del sistema lineal
+% Campo vectorial, trayectorias, eigenvectores, nullclinas
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.45\textwidth]{figuras/plano_fase.pdf}
+%     \caption{Plano de fase del sistema de subpoblaciones.}
+%     \label{fig:plano-fase}
+% \end{figure}
+
+
+%-----------------------------------------------------------------------------------
+\section{Análisis Numérico}\label{sec:numerico}
+%-----------------------------------------------------------------------------------
+
+% TODO: Completar análisis numérico (3 páginas)
+
+%-----------------------------------------------------------------------------------
+\subsection{Condición del Problema}\label{subsec:condicion}
+%-----------------------------------------------------------------------------------
+
+% TODO: Análisis de sensibilidad
+% Número de condición
+% Clasificación: bien/mal condicionado
+
+
+%-----------------------------------------------------------------------------------
+\subsection{Métodos Numéricos Implementados}\label{subsec:metodos}
+%-----------------------------------------------------------------------------------
+
+% TODO: Descripción de métodos
+% 1. Euler explícito: P_{n+1} = P_n + h·f(t_n, P_n)
+% 2. Runge-Kutta de orden 4
+
+
+%-----------------------------------------------------------------------------------
+\subsection{Análisis de Errores}\label{subsec:errores}
+%-----------------------------------------------------------------------------------
+
+% TODO: Error relativo, forward/backward error
+% \begin{table}[H]
+%     \centering
+%     \begin{tabular}{|c|c|c|c|}
+%         \hline
+%         $h$ & Error Euler & Error RK4 & Razón \\
+%         \hline
+%         % TODO: Completar con datos
+%         \hline
+%     \end{tabular}
+%     \caption{Análisis de errores para diferentes tamaños de paso.}
+%     \label{tab:errores}
+% \end{table}
+
+
+%-----------------------------------------------------------------------------------
+\subsection{Orden de Convergencia}\label{subsec:convergencia}
+%-----------------------------------------------------------------------------------
+
+% TODO: Verificación experimental del orden
+% Gráfico log-log
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.45\textwidth]{figuras/convergencia.pdf}
+%     \caption{Orden de convergencia (gráfico log-log).}
+%     \label{fig:convergencia}
+% \end{figure}
+
+
+%-----------------------------------------------------------------------------------
+\subsection{Complejidad Computacional}\label{subsec:complejidad}
+%-----------------------------------------------------------------------------------
+
+% TODO: Análisis teórico y mediciones experimentales
+% \begin{table}[H]
+%     \centering
+%     \begin{tabular}{|c|c|c|c|}
+%         \hline
+%         Método & Eval. f & Complejidad & Tiempo (s) \\
+%         \hline
+%         Euler & 1 & $O(n)$ & \\
+%         RK4 & 4 & $O(n)$ & \\
+%         \hline
+%     \end{tabular}
+%     \caption{Complejidad computacional de los métodos.}
+%     \label{tab:complejidad}
+% \end{table}
+
+
+%-----------------------------------------------------------------------------------
+\subsection{Validación con Benchmarks}\label{subsec:validacion}
+%-----------------------------------------------------------------------------------
+
+% TODO: Comparación con soluciones exactas y scipy.integrate.odeint
+
+
+%-----------------------------------------------------------------------------------
+\section{Resultados y Discusión}\label{sec:resultados}
+%-----------------------------------------------------------------------------------
+
+% TODO: Completar resultados y discusión (1.5 páginas)
+% - Comparación de métodos
+% - Ventajas y desventajas
+% - Aplicabilidad
+% - Limitaciones del modelo
+
+
+%-----------------------------------------------------------------------------------
+\section{Conclusiones}\label{sec:conclusiones}
+%-----------------------------------------------------------------------------------
+
+% TODO: Completar conclusiones (0.5 páginas)
+% - Síntesis de resultados
+% - Cumplimiento de objetivos
+% - Trabajo futuro
+
+
+%===================================================================================
+% REFERENCIAS
+%===================================================================================
+
+\begin{thebibliography}{99}
+
+\bibitem{edwards}
+Edwards, C. H., \& Penney, D. E. (2008).
+\textit{Ecuaciones Diferenciales y Problemas con Valores en la Frontera} (4ta ed.).
+Pearson Educación.
+
+\bibitem{burden}
+Burden, R. L., Faires, J. D., \& Burden, A. M. (2017).
+\textit{Análisis Numérico} (10ma ed.).
+CENGAGE Learning.
+
+% TODO: Agregar más referencias según sea necesario
+
+\end{thebibliography}
 
 %===================================================================================
 
-
+%===================================================================================
 \label{end}
-
 \end{document}
 
 %===================================================================================
