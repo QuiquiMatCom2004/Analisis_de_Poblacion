@@ -47,6 +47,14 @@ ENV/
 Informe_Sobre_Analisis_de_Poblacion.pdf
 informe.pdf
 
+# Generated plots and images
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.pdf
+!Documentation/**/*.pdf
+
 # OS
 .DS_Store
 Thumbs.db
