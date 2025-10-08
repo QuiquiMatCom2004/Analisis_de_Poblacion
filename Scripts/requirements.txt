@@ -1,0 +1,18 @@
+# Dependencies for Population Analysis Project
+# Ordinary Differential Equations and Numerical Mathematics
+
+# Numerical computation
+numpy>=1.24.0
+
+# Visualization
+matplotlib>=3.7.0
+
+# ODE integration and linear algebra
+scipy>=1.10.0
+
+# Interactive notebooks (for deliverables)
+jupyter>=1.0.0
+ipywidgets>=8.0.0
+
+# Symbolic computation (optional)
+sympy>=1.12
