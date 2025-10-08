@@ -70,7 +70,7 @@
 \name Heily Rodríguez Rodríguez \email \href{mailto:heily.rodriguez@estudiantes.matcom.uh.cu}{heily.rodriguez@estudiantes.matcom.uh.cu}
   \\ \addr Grupo C-212 \AND
 \name Alex L. Cuervo Grillo \email \href{mailto:alex.lcuervo@estudiantes.matcom.uh.cu}{alex.lcuervo@estudiantes.matcom.uh.cu}
-  \\ \addr Grupo C-212}
+  \\ \addr Grupo C-211}
 
 %-----------------------------------------------------------------------------------
 % Tutores (si aplica)
@@ -250,8 +250,32 @@ lo que indica que la población del tumor se estabiliza en un valor finito deter
 \subsection{Existencia y Unicidad}\label{subsec:existencia}
 %-----------------------------------------------------------------------------------
 
-% TODO: Teorema de Picard-Lindelöf
-% Verificar continuidad de f(t,P) y ∂f/∂P
+Para garantizar que el problema de valor inicial
+\[\frac{dP}{dt} = f(t,P) = \beta_0 e^{-\alpha t} P, \quad P(0) = P_0\]
+posee una solución única, aplicamos el \textbf{Teorema de Existencia y Unicidad} \cite{edwards}.
+
+\textbf{Teorema de Existencia y Unicidad:} Si $f(t,P)$ y $\frac{\partial f}{\partial P}$ son continuas en una región rectangular $R = \{(t,P): |t-t_0| \leq a, |P-P_0| \leq b\}$ que contiene al punto $(t_0, P_0)$, entonces existe una única solución $P(t)$ del problema de valor inicial en algún intervalo $|t-t_0| \leq h$ contenido en $|t-t_0| \leq a$.
+
+\textbf{Verificación de hipótesis para nuestro modelo:}
+
+\begin{enumerate}
+    \item \textbf{Continuidad de $f(t,P)$:}
+
+    La función $f(t,P) = \beta_0 e^{-\alpha t} P$ es continua en todo $\mathbb{R}^2$ ya que es el producto de dos funciones continuas: la función exponencial $\beta_0 e^{-\alpha t}$ (continua para todo $t \in \mathbb{R}$) y la función lineal $P$ (continua para todo $P \in \mathbb{R}$).
+
+    \item \textbf{Continuidad de $\frac{\partial f}{\partial P}$:}
+
+    Calculamos la derivada parcial de $f$ respecto a $P$:
+    \[\frac{\partial f}{\partial P} = \frac{\partial}{\partial P}\left(\beta_0 e^{-\alpha t} P\right) = \beta_0 e^{-\alpha t}\]
+
+    Esta derivada parcial es continua en todo $\mathbb{R}^2$ ya que depende únicamente de $t$ y es una función exponencial.
+
+    Además, $\frac{\partial f}{\partial P}$ es acotada en cualquier región rectangular. Para $t \in [0, T]$, tenemos:
+    \[\left|\frac{\partial f}{\partial P}\right| = \beta_0 e^{-\alpha t} \leq \beta_0\]
+    lo que implica que $f$ satisface una condición de Lipschitz con constante $L = \beta_0$.
+\end{enumerate}
+
+\textbf{Conclusión:} Por el Teorema de Existencia y Unicidad, el problema de valor inicial tiene una solución única $P(t)$ definida en todo el intervalo $[0, \infty)$. La acotación global de $\frac{\partial f}{\partial P}$ garantiza que la solución existe para todo $t \geq 0$.
 
 
 %-----------------------------------------------------------------------------------
@@ -272,14 +296,25 @@ lo que indica que la población del tumor se estabiliza en un valor finito deter
 \subsection{Campo de Isoclinas}\label{subsec:isoclinas}
 %-----------------------------------------------------------------------------------
 
-% TODO: Gráfico del campo de isoclinas con soluciones numéricas
-% Ecuación: P = Ce^(αt)/β₀
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=0.45\textwidth]{figuras/isoclinas.pdf}
-%     \caption{Campo de isoclinas para el modelo del tumor.}
-%     \label{fig:isoclinas}
-% \end{figure}
+La visualización del campo de isoclinas permite comprender el comportamiento cualitativo del modelo del tumor. Las isoclinas son curvas en el plano $(t, P)$ donde la derivada $\frac{dP}{dt}$ es constante, y el campo direccional muestra la pendiente de las soluciones en cada punto.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{campo_isoclinas.png}
+    \caption{Campo de isoclinas y solución analítica para el modelo del tumor con parámetros $\beta_0=2.0$, $\alpha=0.5$ y condición inicial $P_0=100$.}
+    \label{fig:isoclinas}
+\end{figure}
+
+La Figura \ref{fig:isoclinas} muestra el campo direccional generado por la ecuación diferencial $\frac{dP}{dt} = \beta_0 e^{-\alpha t} P$. Las curvas de isoclinas corresponden a diferentes valores de la constante $C$ en la familia de soluciones, y la línea roja gruesa representa la solución analítica que satisface la condición inicial $P(0)=100$, convergiendo asintóticamente al límite $P_{\infty} = 5459.82$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{comparacion_soluciones.png}
+    \caption{Familia de soluciones analíticas con diferentes condiciones iniciales.}
+    \label{fig:comparacion}
+\end{figure}
+
+La Figura \ref{fig:comparacion} presenta la familia de soluciones analíticas para diferentes valores de la población inicial ($P_0 = 50, 100, 150, 200$), mostrando cómo cada trayectoria converge a su respectivo límite asintótico $P_{\infty} = P_0 e^{\beta_0/\alpha}$. Las líneas punteadas horizontales indican los valores límite para cada condición inicial.
 
 
 %-----------------------------------------------------------------------------------
