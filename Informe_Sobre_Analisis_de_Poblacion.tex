@@ -227,7 +227,14 @@ lo que indica que la población del tumor se estabiliza en un valor finito deter
 % Parámetro de control: μ
 % Puntos de equilibrio: z* = 0, z* = ±√μ (si μ > 0)
 
-
+Para el modelo poblacional reducido consideramos la ecuación:
+\[\frac{dz}{dt} = \mu z - z^3\]
+donde \(z(t)\) representa una variable de estado reducida y \(\mu\) es un parámetro de control ambiental.
+\\
+Los puntos de equilibrio se obtienen igualando la ecuación a cero:
+\[\mu z - z^3 = 0 \quad \Rightarrow \quad z(\mu - z^2) = 0.\]
+Por lo tanto, los puntos de equilibrio son:
+\[z^* = 0, \quad z^* = \pm\sqrt{\mu} \quad \text{(para \(\mu \geq 0\))}.\]
 %-----------------------------------------------------------------------------------
 \subsection{Parte C: Sistema de Subpoblaciones}\label{subsec:parte-c}
 %-----------------------------------------------------------------------------------
@@ -277,7 +284,6 @@ posee una solución única, aplicamos el \textbf{Teorema de Existencia y Unicida
 
 \textbf{Conclusión:} Por el Teorema de Existencia y Unicidad, el problema de valor inicial tiene una solución única $P(t)$ definida en todo el intervalo $[0, \infty)$. La acotación global de $\frac{\partial f}{\partial P}$ garantiza que la solución existe para todo $t \geq 0$.
 
-
 %-----------------------------------------------------------------------------------
 \subsection{Análisis de Equilibrios y Estabilidad}\label{subsec:equilibrios}
 %-----------------------------------------------------------------------------------
@@ -285,6 +291,44 @@ posee una solución única, aplicamos el \textbf{Teorema de Existencia y Unicida
 % TODO: Para Parte B y Parte C
 % Eigenvalores y clasificación de puntos críticos
 
+En la  ecuación: \[\frac{dz}{dt} = \mu z - z^3\]
+La estabilidad de cada punto crítico se determina mediante el signo de la derivada:
+\[f'(z) = \frac{d}{dz}(\mu z - z^3) = \mu - 3z^2.\]
+
+Evaluamos \(f'(z)\) en cada punto de crítico:
+\\Para \(z^* = 0\): \(f'(0) = \mu\)
+\\Si \(\mu < 0\), \(f'(0) < 0\): equilibrio estable
+\\Si \(\mu > 0\), \(f'(0) > 0\): equilibrio inestable
+
+Cuando $\mu = 0$, la ecuación original se reduce a:
+\[\frac{dz}{dt} = -z^3.\]
+\\El punto $z^* = 0$ es \textbf{estable}, ya que $-z^3$ atrae soluciones hacia $z = 0$ para $z \neq 0$. 
+\\Sin embargo, el análisis lineal falla ($f'(0) = 0$), lo que indica una \textbf{bifurcación}.
+\\
+\\Para \(z^* = \sqrt{\mu}\) (con \(\mu \geq 0\)): \(f'(\sqrt{\mu}) = \mu - 3\mu = -2\mu\)
+\\Si \(\mu > 0\), \(f'(\sqrt{\mu}) < 0\): equilibrio estable
+\\
+\\Para \(z^* = -\sqrt{\mu}\) (con \(\mu \geq 0\)): \(f'(-\sqrt{\mu}) = \mu - 3\mu = -2\mu\)
+\\Si \(\mu > 0\), \(f'(-\sqrt{\mu}) < 0\): equilibrio estable
+\\
+{Resumen de Estabilidad}
+\begin{table}[H]
+  \begin{tabular}{|c|c|c|}
+      \hline
+      \textbf{Valor de $\mu$} & \textbf{Pto de Equilibrio} & \textbf{Estabilidad} \\
+      \hline
+      $\mu < 0$ & $z^* = 0$ & Estable \\
+      \hline
+      $\mu = 0$ & $z^* = 0$ & Estable (no lineal) \\
+      \hline
+      $\mu > 0$ & $z^* = 0$ & Inestable \\
+      \hline
+      $\mu > 0$ & $z^* = \pm\sqrt{\mu}$ & Estable \\
+      \hline
+  \end{tabular}
+  \caption{Clasificación de puntos de equilibrio para el modelo de bifurcación}
+  \label{tab:estabilidad-bifurcacion}
+\end{table}
 
 %-----------------------------------------------------------------------------------
 \section{Visualización}\label{sec:visualizacion}
@@ -329,8 +373,34 @@ La Figura \ref{fig:comparacion} presenta la familia de soluciones analíticas pa
 %     \caption{Diagrama de bifurcación del sistema reducido.}
 %     \label{fig:bifurcacion}
 % \end{figure}
+El diagrama de bifurcación permite realizar el análisis cualitativo de sistemas dinámicos, permitiendo visualizar cómo los puntos de equilibrio y su estabilidad varían en función de un parámetro de control.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{diagrama_bifurcacion.png}
+    \caption{Diagrama de bifurcación para el modelo poblacional reducido $\frac{dz}{dt} = \mu z - z^$}
+    \label{fig:bifurcacion}
+\end{figure}
 
+La Figura \ref{fig:bifurcacion} muestra el diagrama de bifurcación en el que se aprecia que:
+\begin{itemize}
+    \item Para $\mu < 0$: Un único equilibrio estable en $z = 0$
+    \item En $\mu = 0$: \textbf{Punto de bifurcación} donde $z = 0$ pierde estabilidad
+    \item Para $\mu > 0$: Tres equilibrios:
+    \begin{itemize}
+        \item $z = 0$: Inestable
+        \item $z = \pm\sqrt{\mu}$: Estables
+    \end{itemize}
+\end{itemize}
+\paragraph{Conclusión del Análisis}
+El modelo $\frac{dz}{dt} = \mu z - z^3$ exhibe una transición de fase matemática en $\mu = 0$, caracterizada por:
+\begin{itemize}
+    \item Pérdida de estabilidad del estado trivial
+    \item Emergencia de dos estados estables no triviales
+    \item Simetría $\mathbb{Z}_2$ rota espontáneamente para $\mu > 0$
+    \item Comportamiento universal de bifurcación de horquilla
+\end{itemize}
 
+Este análisis fundamenta matemáticamente la interpretación biológica de transición entre extinción y supervivencia poblacional.
 %-----------------------------------------------------------------------------------
 \subsection{Plano de Fase}\label{subsec:plano-fase}
 %-----------------------------------------------------------------------------------
@@ -358,7 +428,8 @@ La Figura \ref{fig:comparacion} presenta la familia de soluciones analíticas pa
 % TODO: Análisis de sensibilidad
 % Número de condición
 % Clasificación: bien/mal condicionado
-
+El numero de condicion de un problema se aproxima a $cond \approx t \frac{dP}{dt} \frac{1}{P}$. Sustituyendo queda $cond \approx t \frac{\beta_0 e^{-\alpha t} P}{P} = t \beta_0 e^{-\alpha t}$.
+$\longrightarrow$ como $\alpha > 0 \longrightarrow lim_{t \rightarrow \infty} cond = 0$ por tanto el problema esta bien condicionado siempre que $\alpha > 0$ 
 
 %-----------------------------------------------------------------------------------
 \subsection{Métodos Numéricos Implementados}\label{subsec:metodos}
