@@ -269,12 +269,96 @@ Scripts/
 **Archivos generados por ejecución:**
 - `campo_isoclinas.png` (300 DPI)
 - `comparacion_soluciones.png` (300 DPI)
+- `comparacion_metodos_numericos.png` (300 DPI) - generado por `Analisis_Errores.py`
+- `errores_relativos_tiempo.png` (300 DPI) - generado por `Analisis_Errores.py`
+- `convergencia_orden.png` (300 DPI) - generado por `Analisis_Errores.py`
+
+---
+
+## Módulo: `Analisis_Errores.py`
+
+**Descripción general:** Script de análisis comparativo de errores entre los métodos de Euler y RK4 contra soluciones exactas calculadas matemáticamente a mano (sin errores de redondeo computacional).
+
+### Parámetros Fijos del Análisis
+
+| Parámetro | Valor | Descripción |
+|-----------|-------|-------------|
+| `P0` | 100.0 | Población inicial |
+| `beta0` | 2.0 | Tasa de crecimiento inicial |
+| `alpha` | 0.5 | Tasa de decrecimiento exponencial |
+| `t_eval` | [1.0, 3.5, 10.0] | Puntos de evaluación no equidistantes |
+| `h_values` | [0.1, 0.05, 0.01] | Tamaños de paso analizados |
+
+### Valores Exactos de Referencia
+
+Calculados matemáticamente usando la fórmula analítica (sin errores computacionales):
+
+| Tiempo | Valor Exacto |
+|--------|--------------|
+| t = 1.0 | P(1.0) = 482.532148288934 |
+| t = 3.5 | P(3.5) = 2724.593201734644 |
+| t = 10.0 | P(10.0) = 5314.628532833040 |
+
+### Salidas del Script
+
+#### Gráficos Generados
+
+| Archivo | Descripción |
+|---------|-------------|
+| `comparacion_metodos_numericos.png` | 3 subplots comparando soluciones exactas vs Euler vs RK4 para h=[0.1, 0.05, 0.01] |
+| `errores_relativos_tiempo.png` | 3 subplots (escala semilog) mostrando evolución del error relativo en función del tiempo |
+| `convergencia_orden.png` | Gráfico log-log del error máximo vs tamaño de paso con líneas de referencia teóricas O(h) y O(h⁴) |
+
+#### Archivos de Texto
+
+| Archivo | Descripción |
+|---------|-------------|
+| `resultados_analisis_errores_latex.txt` | Tablas LaTeX listas para copiar al informe con todos los resultados numéricos |
+
+### Métricas Calculadas
+
+| Métrica | Fórmula | Descripción |
+|---------|---------|-------------|
+| Error Absoluto | `\|P_exacto - P_numerico\|` | Diferencia absoluta entre solución exacta y numérica |
+| Error Relativo (%) | `(\|P_exacto - P_numerico\| / \|P_exacto\|) × 100` | Error como porcentaje del valor exacto |
+| Orden de Convergencia | `p ≈ log(E2/E1) / log(h2/h1)` | Orden experimental verificado contra teórico (Euler: 1, RK4: 4) |
+
+### Resultados Clave del Análisis
+
+**Errores Máximos por Tamaño de Paso:**
+
+| h | Max Err.Rel Euler | Max Err.Rel RK4 | Razón (Euler/RK4) |
+|---|-------------------|-----------------|-------------------|
+| 0.1 | 9.82% | 0.00094% | ~10,471x |
+| 0.05 | 5.22% | 0.000063% | ~83,467x |
+| 0.01 | 1.10% | 0.0000001% | ~10,439,338x |
+
+**Orden de Convergencia Experimental:**
+
+| Transición | Orden Euler | Orden RK4 | Teórico |
+|------------|-------------|-----------|---------|
+| h: 0.1 → 0.05 | p ≈ 0.913 | p ≈ 3.907 | Euler: 1, RK4: 4 |
+| h: 0.05 → 0.01 | p ≈ 0.968 | p ≈ 3.968 | Euler: 1, RK4: 4 |
+
+### Ejemplo de Uso
+
+```python
+# Ejecutar análisis completo
+python Analisis_Errores.py
+
+# El script genera automáticamente:
+# - 3 gráficos PNG (300 DPI)
+# - 1 archivo de texto con tablas LaTeX
+# - Salida en consola con todos los resultados numéricos
+```
 
 ---
 
 ## Archivo Generado
 
 **Autores:** Enrique A. González Moreira, Heily Rodríguez Rodríguez, Alex L. Cuervo Grillo
-**Fecha:** 2025-10-07
-**Versión:** 2.0
+**Fecha:** 2025-11-08 (Actualizado)
+**Versión:** 2.1 - Añadido análisis de errores numéricos
 **Asignaturas:** Matemática Numérica y Ecuaciones Diferenciales Ordinarias
+
+
