@@ -32,6 +32,7 @@
 \usepackage{subcaption}
 \usepackage{float}
 \usepackage{multirow}
+\usepackage{bm}
 %-----------------------------------------------------------------------------------
 % Configuración
 %-----------------------------------------------------------------------------------
@@ -244,6 +245,127 @@ Por lo tanto, los puntos de equilibrio son:
 \subsection{Parte C: Sistema de Subpoblaciones}\label{subsec:parte-c}
 %-----------------------------------------------------------------------------------
 
+
+En esta sección abordamos el análisis de un sistema lineal de ecuaciones diferenciales que modela la interacción entre dos subpoblaciones. El sistema está dado por:
+
+
+
+\[
+\frac{dx}{dt} = x - y, \qquad \frac{dy}{dt} = 2x - 3y.
+\]
+
+
+
+Este tipo de sistema puede representar, por ejemplo, la dinámica entre células tumorales activas y células en estado latente, o entre dos tipos de poblaciones con tasas de interacción diferenciadas. Para facilitar el análisis, expresamos el sistema en forma matricial:
+
+
+
+\[
+\frac{d\bm{X}}{dt} = A \bm{X}, \qquad 
+\bm{X}(t) = \begin{bmatrix} x(t) \\ y(t) \end{bmatrix}, \quad
+A = \begin{bmatrix} 1 & -1 \\ 2 & -3 \end{bmatrix}.
+\]
+
+
+
+Identificamos el punto crítico resolviendo \( A \bm{X} = \bm{0} \). Esto nos lleva al sistema homogéneo:
+
+
+
+\[
+x - y = 0, \qquad 2x - 3y = 0.
+\]
+
+
+
+Sustituyendo \( x = y \) en la segunda ecuación obtenemos \( -y = 0 \), lo que implica que \( y = 0 \) y por tanto \( x = 0 \). El único punto de equilibrio es el origen \( (0,0) \).
+
+Para estudiar la estabilidad del sistema, calculamos el polinomio característico de la matriz \( A \). Sea \( \lambda \) un valor propio, entonces:
+
+
+
+\[
+\det(A - \lambda I) = 
+\begin{vmatrix}
+1 - \lambda & -1 \\
+2 & -3 - \lambda
+\end{vmatrix}
+= (1 - \lambda)(-3 - \lambda) + 2.
+\]
+
+
+
+Desarrollamos el producto:
+
+
+
+\[
+(1 - \lambda)(-3 - \lambda) = -3 + \lambda - \lambda(-3) - \lambda^2 = \lambda^2 + 2\lambda - 3,
+\]
+
+
+
+y al sumar 2 obtenemos:
+
+
+
+\[
+\lambda^2 + 2\lambda - 1.
+\]
+
+
+
+Aplicamos la fórmula general para resolver:
+
+
+
+\[
+\lambda = \frac{-2 \pm \sqrt{4 + 4}}{2} = \frac{-2 \pm \sqrt{8}}{2} = -1 \pm \sqrt{2}.
+\]
+
+
+
+Los valores propios son reales y de signo opuesto: uno positivo (\( \lambda_1 = -1 + \sqrt{2} \)) y otro negativo (\( \lambda_2 = -1 - \sqrt{2} \)). Esto indica que el origen es un punto silla, con una dirección estable y otra inestable.
+
+Procedemos a calcular los vectores propios. Para \( \lambda_1 \), resolvemos:
+
+
+
+\[
+(1 - \lambda_1)v_1 - v_2 = 0 \Rightarrow v_2 = (1 - \lambda_1)v_1.
+\]
+
+
+
+Tomando \( v_1 = 1 \), obtenemos:
+
+
+
+\[
+\bm{v}^{(1)} = \begin{bmatrix} 1 \\ 2 - \sqrt{2} \end{bmatrix}.
+\]
+
+
+
+De forma análoga, para \( \lambda_2 \):
+
+
+
+\[
+v_2 = (1 - \lambda_2)v_1 \Rightarrow \bm{v}^{(2)} = \begin{bmatrix} 1 \\ 2 + \sqrt{2} \end{bmatrix}.
+\]
+
+
+
+Cada solución del sistema puede expresarse como combinación lineal de las soluciones en las direcciones propias:
+
+
+
+\[
+\bm{X}(t) = c_1 e^{\lambda_1 t} \bm{v}^{(1)} + c_2 e^{\lambda_2 t} \bm{v}^{(2)}.
+\]
+
+
 % TODO: Acoplamiento lineal
 % Sistema:
 %   dx/dt = x - y
@@ -409,6 +531,11 @@ Este análisis fundamenta matemáticamente la interpretación biológica de tran
 %-----------------------------------------------------------------------------------
 \subsection{Plano de Fase}\label{subsec:plano-fase}
 %-----------------------------------------------------------------------------------
+En la subsección 2.3 analizamos un sistema de poblaciones, ahora nos referiremos al análisis de su plano de fase correspondiente.
+
+La dirección asociada a \( \lambda_2 < 0 \) es estable: las trayectorias se acercan al origen. La dirección asociada a \( \lambda_1 > 0 \) es inestable: las trayectorias se alejan. En el plano de fase, esto se traduce en dos rectas por el origen con pendientes \( m_1 = 2 - \sqrt{2} \) y \( m_2 = 2 + \sqrt{2} \), sobre las cuales se trazan flechas indicando el flujo. Las trayectorias típicas se aproximan por la dirección estable y se desvían siguiendo la inestable, formando el patrón característico de un punto silla.
+
+Este análisis nos permite comprender cómo evoluciona el sistema de subpoblaciones en el tiempo, y cómo la interacción entre componentes puede generar comportamientos divergentes incluso en sistemas lineales simples.
 
 % TODO: Retrato fase del sistema lineal
 % Campo vectorial, trayectorias, eigenvectores, nullclinas
@@ -433,8 +560,8 @@ Este análisis fundamenta matemáticamente la interpretación biológica de tran
 % TODO: Análisis de sensibilidad
 % Número de condición
 % Clasificación: bien/mal condicionado
-El numero de condicion de un problema se aproxima a $cond \approx t \frac{dP}{dt} \frac{1}{P}$. Sustituyendo queda $cond \approx t \frac{\beta_0 e^{-\alpha t} P}{P} = t \beta_0 e^{-\alpha t}$.
-$\longrightarrow$ como $\alpha > 0 \longrightarrow lim_{t \rightarrow \infty} cond = 0$ por tanto el problema esta bien condicionado siempre que $\alpha > 0$ 
+El número de condición de un problema se aproxima a $cond \approx t \frac{dP}{dt} \frac{1}{P}$. Sustituyendo queda $cond \approx t \frac{\beta_0 e^{-\alpha t} P}{P} = t \beta_0 e^{-\alpha t}$.
+$\longrightarrow$ como $\alpha > 0 \longrightarrow lim_{t \rightarrow \infty} cond = 0$ por tanto el problema está bien condicionado siempre que $\alpha > 0$ 
 
 %-----------------------------------------------------------------------------------
 \subsection{Métodos Numéricos Implementados}\label{subsec:metodos}
