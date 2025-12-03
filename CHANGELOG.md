@@ -138,7 +138,6 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 - ✅ **Documentos de planificación**:
   - `README.md`: Descripción general
   - `FLUJO_TRABAJO_TEMA_10.md`: Plan detallado de 6 fases
-  - `CLAUDE.md`: Guía para Claude Code
 - ✅ **Carpeta `Documentation/`**:
   - Edwards & Penney (PDF ~35 MB)
   - Burden et al. (PDF ~7.6 MB)
@@ -234,9 +233,6 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 - Enrique A. González Moreira
 - Heily Rodríguez Rodríguez
 - Alex L. Cuervo Grillo
-
-### Asistentes
-- Claude Code (Anthropic) - Desarrollo y documentación
 
 ### Repositorio
 - **Ubicación:** `/home/kiki/Proyectos/Analisis_de_Poblacion`
