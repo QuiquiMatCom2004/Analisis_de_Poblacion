@@ -266,12 +266,21 @@ Scripts/
 └── requirements.txt                  # Dependencias Python
 ```
 
+**Directorio de figuras:**
+- **Todas las figuras se guardan en:** `../Figuras/`
+- Ruta configurada mediante: `FIGURAS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Figuras')`
+- La carpeta se crea automáticamente si no existe: `os.makedirs(FIGURAS_DIR, exist_ok=True)`
+
 **Archivos generados por ejecución:**
-- `campo_isoclinas.png` (300 DPI)
-- `comparacion_soluciones.png` (300 DPI)
-- `comparacion_metodos_numericos.png` (300 DPI) - generado por `Analisis_Errores.py`
-- `errores_relativos_tiempo.png` (300 DPI) - generado por `Analisis_Errores.py`
-- `convergencia_orden.png` (300 DPI) - generado por `Analisis_Errores.py`
+- `Figuras/campo_isoclinas.png` (513 KB, 300 DPI)
+- `Figuras/campo_isoclinas_comparacion.png` (694 KB, 300 DPI)
+- `Figuras/comparacion_soluciones.png` (333 KB, 300 DPI)
+- `Figuras/comparacion_metodos_numericos.png` (308 KB, 300 DPI) - generado por `Analisis_Errores.py`
+- `Figuras/errores_relativos_tiempo.png` (273 KB, 300 DPI) - generado por `Analisis_Errores.py`
+- `Figuras/convergencia_orden.png` (317 KB, 300 DPI) - generado por `Analisis_Errores.py`
+- `Figuras/diagrama_bifurcacion.png` (443 KB, 300 DPI) - generado por `Diagrama_de_Bifurcacion.py`
+- `Figuras/plano_fase.png` (1.1 MB, 300 DPI) - generado por `Plano_Fase.py`
+- `Figuras/comportamiento_asintotico.png` (216 KB, 300 DPI) - generado por `Plano_Fase.py`
 
 ---
 
@@ -357,8 +366,224 @@ python Analisis_Errores.py
 ## Archivo Generado
 
 **Autores:** Enrique A. González Moreira, Heily Rodríguez Rodríguez, Alex L. Cuervo Grillo
-**Fecha:** 2025-11-08 (Actualizado)
-**Versión:** 2.1 - Añadido análisis de errores numéricos
+**Fecha:** 2025-12-02 (Actualizado)
+**Versión:** 2.3 - Organización centralizada de figuras y actualización de rutas
 **Asignaturas:** Matemática Numérica y Ecuaciones Diferenciales Ordinarias
+
+---
+
+## Cambios en Versión 2.3 (2025-12-02)
+
+- ✅ **Organización de figuras:** Todas las imágenes ahora se guardan en carpeta centralizada `Figuras/`
+- ✅ **Actualización de rutas:** Todos los scripts actualizados para usar `FIGURAS_DIR`
+- ✅ **Portabilidad mejorada:** Rutas relativas usando `os.path.join()`
+- ✅ **Documentación de figuras:** Nuevo `Figuras/README.md` con descripción completa
+- ✅ **Creación automática:** Carpeta Figuras se crea automáticamente si no existe
+
+---
+
+## Módulo: `Plano_Fase.py`
+
+**Descripción general:** Visualización completa del plano de fase para el sistema lineal de subpoblaciones de la Parte C. Incluye análisis de estabilidad, campo vectorial, trayectorias, vectores propios, nullclinas y comportamiento asintótico.
+
+### Sistema Matemático Analizado
+
+**Sistema de EDOs:**
+```
+dx/dt = x - y
+dy/dt = 2x - 3y
+```
+
+**Forma matricial:** dX/dt = AX, donde A = [[1, -1], [2, -3]]
+
+**Valores propios:**
+- λ₁ = -1 + √2 ≈ 0.414 (positivo, dirección inestable)
+- λ₂ = -1 - √2 ≈ -2.414 (negativo, dirección estable)
+
+**Vectores propios:**
+- v₁ = [1, 2-√2] (dirección inestable)
+- v₂ = [1, 2+√2] (dirección estable)
+
+**Clasificación:** Punto crítico (0,0) es un **PUNTO SILLA** (inestable)
+
+### Clase: `PlanoFaseSistemaLineal`
+
+#### Constructor
+
+| Método | Parámetros | Descripción / Retorno |
+|--------|------------|----------------------|
+| `__init__()` | Ninguno | **Descripción:** Inicializa el sistema con la matriz A, calcula valores y vectores propios, y clasifica el punto crítico.<br>**Retorna:** Instancia de `PlanoFaseSistemaLineal` |
+
+#### Métodos Principales
+
+| Método | Parámetros | Descripción / Retorno |
+|--------|------------|----------------------|
+| `sistema(X, t)` | `X` (array): Vector [x, y]<br>`t` (float): Tiempo | **Descripción:** Define el sistema de EDOs dx/dt = x-y, dy/dt = 2x-3y.<br>**Retorna:** `list` - [dx/dt, dy/dt] |
+| `calcular_trayectoria(X0, t_span, num_points)` | `X0` (list): Condición inicial [x0, y0]<br>`t_span` (float, opcional): Tiempo total (default: 10)<br>`num_points` (int, opcional): Puntos de evaluación (default: 1000) | **Descripción:** Calcula trayectoria desde condición inicial usando `scipy.integrate.odeint`.<br>**Retorna:** `tuple(t, trayectoria)` - array Nx2 |
+| `visualizar_plano_fase(xlim, ylim, num_arrows, figsize)` | `xlim` (tuple, opcional): Límites eje x (default: (-3,3))<br>`ylim` (tuple, opcional): Límites eje y (default: (-3,3))<br>`num_arrows` (int, opcional): Densidad campo vectorial (default: 20)<br>`figsize` (tuple, opcional): Tamaño figura (default: (12,10)) | **Descripción:** Genera visualización completa: campo vectorial, vectores propios, líneas propias, nullclinas, trayectorias y punto crítico.<br>**Retorna:** `None` (guarda 'plano_fase.png') |
+| `analizar_comportamiento_asintotico()` | Ninguno | **Descripción:** Analiza y grafica comportamiento temporal en direcciones estable e inestable.<br>**Retorna:** `None` (guarda 'comportamiento_asintotico.png') |
+
+#### Métodos Privados
+
+| Método | Parámetros | Descripción / Retorno |
+|--------|------------|----------------------|
+| `_clasificar_punto_critico()` | Ninguno | **Descripción:** Clasifica el punto crítico (0,0) según signos de valores propios.<br>**Retorna:** `None` (imprime clasificación) |
+
+#### Función Principal
+
+| Función | Parámetros | Descripción / Retorno |
+|---------|------------|----------------------|
+| `main()` | Ninguno | **Descripción:** Ejecuta análisis completo: crea sistema, genera plano de fase y analiza comportamiento asintótico.<br>**Retorna:** `None` |
+
+### Elementos Visualizados
+
+#### Plano de Fase Completo (`plano_fase.png`)
+
+1. **Campo Vectorial (quiver):**
+   - Flechas normalizadas coloreadas según magnitud (colormap 'viridis')
+   - Muestra dirección del flujo del sistema en cada punto
+
+2. **Vectores Propios:**
+   - **ROJO:** v₁ (λ₁ > 0, dirección inestable) - trayectorias se alejan
+   - **AZUL:** v₂ (λ₂ < 0, dirección estable) - trayectorias se acercan
+
+3. **Líneas Propias:**
+   - Rectas por el origen en direcciones de vectores propios
+   - Línea discontinua roja: pendiente m₁ = 2 - √2
+   - Línea discontinua azul: pendiente m₂ = 2 + √2
+
+4. **Nullclinas:**
+   - **VERDE:** dx/dt = 0 ⟹ y = x
+   - **MAGENTA:** dy/dt = 0 ⟹ y = (2/3)x
+   - Intersección en (0,0) confirma punto crítico
+
+5. **Trayectorias (NARANJA):**
+   - 12 trayectorias desde condiciones iniciales variadas
+   - Integración bidireccional (t positivo y negativo)
+   - Patrón típico de punto silla: aproximación por dirección estable, alejamiento por inestable
+
+6. **Punto Crítico:**
+   - Círculo rojo con centro blanco en (0,0)
+   - Etiquetado como "SILLA"
+
+#### Comportamiento Asintótico (`comportamiento_asintotico.png`)
+
+Dos subplots mostrando evolución temporal:
+
+1. **Dirección Estable (λ₂ < 0):**
+   - x(t) y y(t) convergen exponencialmente a cero
+   - Condición inicial: X0 = 2v₂
+
+2. **Dirección Inestable (λ₁ > 0):**
+   - x(t) y y(t) divergen exponencialmente desde origen
+   - Condición inicial: X0 = 0.1v₁
+
+### Ejemplo de Uso
+
+```python
+#!/usr/bin/env python3
+from Plano_Fase import PlanoFaseSistemaLineal, main
+
+# Opción 1: Usar función main (análisis completo)
+main()
+
+# Opción 2: Uso manual del objeto
+sistema = PlanoFaseSistemaLineal()
+
+# Ver información del sistema
+print(f"Valores propios: {sistema.eigenvalues}")
+print(f"Vectores propios: {sistema.eigenvectors}")
+
+# Calcular trayectoria específica
+X0 = [1.5, 0.5]
+t, trayectoria = sistema.calcular_trayectoria(X0, t_span=8, num_points=500)
+
+# Generar visualización personalizada
+sistema.visualizar_plano_fase(xlim=(-4, 4), ylim=(-4, 4), num_arrows=25)
+
+# Analizar comportamiento asintótico
+sistema.analizar_comportamiento_asintotico()
+```
+
+### Salida del Script
+
+**Archivos generados:**
+- `plano_fase.png` (300 DPI) - Plano de fase completo
+- `comportamiento_asintotico.png` (300 DPI) - Análisis temporal
+
+**Salida en consola:**
+```
+============================================================
+SISTEMA DE SUBPOBLACIONES - PARTE C
+============================================================
+
+Matriz del sistema A:
+[[ 1 -1]
+ [ 2 -3]]
+
+Valores propios:
+  λ₁ = 0.414214 = -1 + √2 ≈ 0.414214
+  λ₂ = -2.414214 = -1 - √2 ≈ -2.414214
+
+Vectores propios:
+  v₁ = [0.76536686 0.64359425]
+  v₂ = [-0.38268343  0.92387953]
+
+------------------------------------------------------------
+CLASIFICACIÓN DEL PUNTO CRÍTICO (0,0)
+------------------------------------------------------------
+Tipo: PUNTO SILLA (Saddle Point)
+Estabilidad: INESTABLE
+  - Dirección estable (λ₂ < 0): hacia el origen
+  - Dirección inestable (λ₁ > 0): alejándose del origen
+------------------------------------------------------------
+
+============================================================
+GENERANDO VISUALIZACIONES...
+============================================================
+
+[1/2] Generando plano de fase...
+✓ Figura guardada en: .../plano_fase.png
+
+[2/2] Analizando comportamiento asintótico...
+✓ Figura guardada en: .../comportamiento_asintotico.png
+
+============================================================
+✓ ANÁLISIS COMPLETADO
+============================================================
+
+Interpretación del Plano de Fase:
+------------------------------------------------------------
+• El origen (0,0) es un PUNTO SILLA (inestable)
+• Dirección ROJA: vector propio v₁ (λ₁ > 0, inestable)
+  → Las trayectorias se ALEJAN del origen en esta dirección
+• Dirección AZUL: vector propio v₂ (λ₂ < 0, estable)
+  → Las trayectorias se ACERCAN al origen en esta dirección
+• Las trayectorias NARANJA muestran el comportamiento típico:
+  → Se aproximan por la dirección estable (azul)
+  → Se alejan siguiendo la dirección inestable (roja)
+============================================================
+```
+
+### Interpretación Biológica
+
+En el contexto de subpoblaciones (ej. células tumorales activas vs latentes):
+
+- **Punto silla:** Sistema inherentemente inestable
+- **Dirección estable (v₂):** Combinación de poblaciones que tiende a extinción
+- **Dirección inestable (v₁):** Combinación que crece sin límite
+- **Implicación práctica:** Pequeñas perturbaciones pueden llevar a extinción o crecimiento ilimitado
+
+### Dependencias Adicionales
+
+| Biblioteca | Método Usado | Descripción |
+|------------|--------------|-------------|
+| `scipy.linalg` | `eig(A)` | Calcula valores y vectores propios de matriz A |
+| `scipy.integrate` | `odeint(func, X0, t)` | Integra sistema de EDOs numéricamente |
+| `matplotlib.patches` | `mpatches` | Importado pero no usado actualmente |
+
+---
+
+## Archivo Generado
 
 

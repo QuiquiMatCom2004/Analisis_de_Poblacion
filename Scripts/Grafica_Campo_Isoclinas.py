@@ -13,10 +13,15 @@ Asignatura: Matematica Numerica y Ecuaciones Diferenciales Ordinarias
 
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 from matplotlib import cm
 from matplotlib.widgets import Slider
 from Ecuacion_De_Poblacion import ModeloTumorAnalitico
 from ModeloTumorBase import ModeloTumorBase
+
+# Directorio para guardar figuras
+FIGURAS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Figuras')
+os.makedirs(FIGURAS_DIR, exist_ok=True)
 
 
 def graficar_campo_isoclinas(modelo, modelos_adicionales=None, t_max=10, num_isoclinas=8, figsize=(12, 8), guardar=None):
@@ -110,6 +115,9 @@ def graficar_campo_isoclinas(modelo, modelos_adicionales=None, t_max=10, num_iso
 
     # Guardar si se especifica
     if guardar:
+        # Si guardar es solo un nombre de archivo, usar carpeta Figuras
+        if not os.path.dirname(guardar):
+            guardar = os.path.join(FIGURAS_DIR, guardar)
         plt.savefig(guardar, dpi=300, bbox_inches='tight')
         print(f"Grafico guardado: {guardar}")
 

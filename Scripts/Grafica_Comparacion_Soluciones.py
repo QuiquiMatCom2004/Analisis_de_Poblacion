@@ -14,9 +14,14 @@ Asignatura: Matematica Numerica y Ecuaciones Diferenciales Ordinarias
 
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 from Ecuacion_De_Poblacion import ModeloTumorAnalitico
 from ModeloTumorEuler import ModeloTumorEuler
 from ModeloTumorRK4 import ModeloTumorRK4
+
+# Directorio para guardar figuras
+FIGURAS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Figuras')
+os.makedirs(FIGURAS_DIR, exist_ok=True)
 
 
 def graficar_comparacion_soluciones(P0_values, beta0, alpha, t_max=10, figsize=(12, 8), guardar=None):
@@ -81,6 +86,9 @@ def graficar_comparacion_soluciones(P0_values, beta0, alpha, t_max=10, figsize=(
 
     # Guardar si se especifica
     if guardar:
+        # Si guardar es solo un nombre de archivo, usar carpeta Figuras
+        if not os.path.dirname(guardar):
+            guardar = os.path.join(FIGURAS_DIR, guardar)
         plt.savefig(guardar, dpi=300, bbox_inches='tight')
         print(f"Grafico guardado: {guardar}")
 
@@ -151,6 +159,9 @@ def graficar_comparacion_metodos(modelos, t_max=10, figsize=(12, 8), guardar=Non
 
     # Guardar si se especifica
     if guardar:
+        # Si guardar es solo un nombre de archivo, usar carpeta Figuras
+        if not os.path.dirname(guardar):
+            guardar = os.path.join(FIGURAS_DIR, guardar)
         plt.savefig(guardar, dpi=300, bbox_inches='tight')
         print(f"Grafico guardado: {guardar}")
 

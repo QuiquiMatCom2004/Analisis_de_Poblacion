@@ -13,11 +13,16 @@ Asignatura: Matematica Numerica y Ecuaciones Diferenciales Ordinarias
 
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 from matplotlib import cm
 from matplotlib.widgets import Slider, Button, RadioButtons
 import matplotlib.patches as patches
 from matplotlib.lines import Line2D
 from ModeloBifurcacion import ModeloBifurcacion
+
+# Directorio para guardar figuras
+FIGURAS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Figuras')
+os.makedirs(FIGURAS_DIR, exist_ok=True)
 
 # =============================================================================
 # FUNCIONES ORIGINALES DEL CÓDIGO
@@ -148,6 +153,9 @@ def graficar_diagrama_bifurcacion(modelo, mu_range=(-2, 2), z_range=(-2, 2), num
     
     # Guardar si se especifica
     if guardar:
+        # Si guardar es solo un nombre de archivo, usar carpeta Figuras
+        if not os.path.dirname(guardar):
+            guardar = os.path.join(FIGURAS_DIR, guardar)
         plt.savefig(guardar, dpi=300, bbox_inches='tight')
         print(f"Diagrama de bifurcación guardado: {guardar}")
     

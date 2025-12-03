@@ -12,8 +12,13 @@ Asignatura: Matematica Numerica y Ecuaciones Diferenciales Ordinarias
 
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 from ModeloTumorEuler import ModeloTumorEuler
 from ModeloTumorRK4 import ModeloTumorRK4
+
+# Directorio para guardar figuras
+FIGURAS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Figuras')
+os.makedirs(FIGURAS_DIR, exist_ok=True)
 
 # ====================================================================================
 # PARAMETROS FIJOS PARA TODO EL ANALISIS
@@ -140,8 +145,9 @@ for idx, (ax, h) in enumerate(zip(axes.flat, h_values)):
     ax.legend(loc='upper left', fontsize=9, framealpha=0.9)
 
 plt.tight_layout()
-plt.savefig('comparacion_metodos_numericos.png', dpi=300, bbox_inches='tight')
-print("\n✓ Gráfico guardado: comparacion_metodos_numericos.png")
+output_path = os.path.join(FIGURAS_DIR, 'comparacion_metodos_numericos.png')
+plt.savefig(output_path, dpi=300, bbox_inches='tight')
+print(f"\n✓ Gráfico guardado: {output_path}")
 
 # ====================================================================================
 # GRAFICO 2: ERRORES RELATIVOS EN FUNCION DEL TIEMPO
@@ -164,8 +170,9 @@ for idx, (ax, h) in enumerate(zip(axes.flat, h_values)):
     ax.legend(loc='best', fontsize=10, framealpha=0.9)
 
 plt.tight_layout()
-plt.savefig('errores_relativos_tiempo.png', dpi=300, bbox_inches='tight')
-print("✓ Gráfico guardado: errores_relativos_tiempo.png")
+output_path = os.path.join(FIGURAS_DIR, 'errores_relativos_tiempo.png')
+plt.savefig(output_path, dpi=300, bbox_inches='tight')
+print(f"✓ Gráfico guardado: {output_path}")
 
 # ====================================================================================
 # GRAFICO 3: CONVERGENCIA (ERROR MAX VS TAMAÑO DE PASO)
@@ -199,8 +206,9 @@ ax.grid(True, alpha=0.3, which='both', linestyle=':')
 ax.legend(loc='upper left', fontsize=11, framealpha=0.9)
 
 plt.tight_layout()
-plt.savefig('convergencia_orden.png', dpi=300, bbox_inches='tight')
-print("✓ Gráfico guardado: convergencia_orden.png")
+output_path = os.path.join(FIGURAS_DIR, 'convergencia_orden.png')
+plt.savefig(output_path, dpi=300, bbox_inches='tight')
+print(f"✓ Gráfico guardado: {output_path}")
 
 # ====================================================================================
 # CALCULO EXPERIMENTAL DEL ORDEN DE CONVERGENCIA
